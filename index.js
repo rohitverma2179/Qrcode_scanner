@@ -634,11 +634,11 @@ app.get("/download", async (req, res) => {
     const qr = await QRCode.create(vcard);
 
     const cellSize = 25;
-    const gap = 100;
+    const gap = 2;
     const size = (qr.modules.size * (cellSize + gap)) + gap;
 
     const canvas = createCanvas(size, size);
-    const ctx = canvas.getContext("1d");
+    const ctx = canvas.getContext("2d");   // <-- FIXED HERE
 
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, size, size);
@@ -668,6 +668,7 @@ app.get("/download", async (req, res) => {
     res.status(500).send("Download error");
   }
 });
+
 
 app.listen(PORT, () =>
   console.log(`🚀 Server running at http://localhost:${PORT}`)

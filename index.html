@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GSAP Advanced Project</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: #0e0e0e;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    /* ===================
+       HERO SECTION
+    ====================*/
+    .hero {
+      width: 100%;
+      height: 100vh;
+      position: relative;
+      padding: 100px 80px;
+      display: flex;
+      align-items: center;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(45deg, rgba(0,0,0,.5), transparent);
+      z-index: 1;
+    }
+
+    .content {
+      position: relative;
+      z-index: 10;
+      max-width: 600px;
+    }
+
+    .title {
+      font-size: 70px;
+      font-weight: 800;
+      line-height: 1;
+      opacity: 0;
+    }
+
+    .title span {
+      color: #ff2d88;
+    }
+
+    .subtitle {
+      margin-top: 20px;
+      font-size: 20px;
+      opacity: 0;
+    }
+
+    .cta-btn {
+      margin-top: 30px;
+      padding: 15px 35px;
+      font-size: 18px;
+      background: #ff2d88;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: 0.2s ease;
+    }
+
+    .hero-img {
+      position: absolute;
+      bottom: 0;
+      right: 80px;
+      width: 450px;
+      opacity: 0;
+    }
+
+    .shape {
+      position: absolute;
+      width: 130px;
+      opacity: 0;
+    }
+
+    .shape1 {
+      top: 20%;
+      left: 10%;
+    }
+
+    .shape2 {
+      bottom: 15%;
+      left: 25%;
+    }
+
+
+    /* =====================
+       RESPONSIVE SECTION
+    =====================*/
+
+    /* TABLET */
+    @media (max-width: 1024px) {
+      .hero {
+        padding: 80px 40px;
+      }
+
+      .hero-img {
+        width: 350px;
+        right: 20px;
+      }
+
+      .title {
+        font-size: 50px;
+      }
+
+      .shape {
+        width: 100px;
+      }
+    }
+
+    /* LARGE MOBILE */
+    @media (max-width: 768px) {
+      .hero {
+        padding: 60px 30px;
+        height: auto;
+        padding-bottom: 80px;
+      }
+
+      .title {
+        font-size: 42px;
+      }
+
+      .subtitle {
+        font-size: 17px;
+      }
+
+      .cta-btn {
+        font-size: 16px;
+        padding: 12px 26px;
+      }
+
+      .hero-img {
+        position: relative;
+        width: 70%;
+        margin-top: 40px;
+        right: 0;
+      }
+
+      .shape1 {
+        top: 10%;
+        left: 5%;
+      }
+
+      .shape2 {
+        left: 60%;
+        bottom: 5%;
+      }
+    }
+
+    /* SMALL MOBILE */
+    @media (max-width: 480px) {
+      .hero {
+        padding: 40px 20px;
+      }
+
+      .title {
+        font-size: 34px;
+      }
+
+      .subtitle {
+        font-size: 16px;
+      }
+
+      .cta-btn {
+        padding: 10px 22px;
+        font-size: 15px;
+      }
+
+      .hero-img {
+        width: 90%;
+      }
+
+      .shape {
+        width: 70px;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <div class="overlay"></div>
+
+    <img class="shape shape1" src="https://i.ibb.co/JH0RDQn/circle.png" />
+    <img class="shape shape2" src="https://i.ibb.co/sFqdK06/square.png" />
+
+    <div class="content">
+      <h1 class="title">
+        Creative <span>Portfolio</span>
+      </h1>
+
+      <p class="subtitle">
+        Animation crafted with GSAP timeline + scroll magic experience.
+      </p>
+
+      <button class="cta-btn">Explore Work</button>
+    </div>
+
+    <img class="hero-img" src="https://i.ibb.co/W0X5nb6/hero.png" />
+  </section>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // === HERO TIMELINE ===
+    const tl = gsap.timeline({
+      defaults: { duration: 1.2, ease: "power3.out" }
+    });
+
+    tl.to(".title", { opacity: 1, y: -20 })
+      .to(".subtitle", { opacity: 1, y: -10 }, "-=0.8")
+      .to(".cta-btn", { opacity: 1, scale: 1 }, "-=0.5")
+      .to(".hero-img", { opacity: 1, x: -50 }, "-=1")
+      .to(".shape1", { opacity: 1, x: 50, rotate: 25 }, "-=1")
+      .to(".shape2", { opacity: 1, x: -40, rotate: -25 }, "-=1");
+
+    // BUTTON HOVER
+    const btn = document.querySelector(".cta-btn");
+
+    btn.addEventListener("mouseenter", () => {
+      gsap.to(btn, { scale: 1.1, duration: 0.2, ease: "power1.out" });
+    });
+
+    btn.addEventListener("mouseleave", () => {
+      gsap.to(btn, { scale: 1, duration: 0.2, ease: "power1.out" });
+    });
+
+    // PARALLAX
+    document.addEventListener("mousemove", (e) => {
+      gsap.to(".shape1", {
+        x: e.clientX / 50,
+        y: e.clientY / 60,
+        duration: 1
+      });
+
+      gsap.to(".shape2", {
+        x: -(e.clientX / 40),
+        y: -(e.clientY / 50),
+        duration: 1
+      });
+    });
+
+    // SCROLL
+    gsap.to(".hero-img", {
+      y: -80,
+      scrollTrigger: {
+        trigger: ".hero",
+        start: "top top",
+        scrub: 2
+      }
+    });
+  </script>
+
+</body>
+</html>
